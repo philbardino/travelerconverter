@@ -25,6 +25,8 @@ div.flag {
   margin-right: 20px;
   margin-top: 2px;
   cursor: move;
+  width: 42px;
+  height: 28px;
 }
 div.inputandflag {
   float: left;
@@ -79,6 +81,8 @@ ul#unusedFlags {
 li.unusedFlag {
   cursor: pointer;
   display: block;
+  width: 42px;
+  height: 28px;
 }
 .unusedFlag {
   display: none;
@@ -233,76 +237,91 @@ div.bookmark input[type="button"] {
 }
 #Cambodia {
   background-position: -102px -70px;
-  width: 42px;
-  height: 28px;
 }
 #China {
   background-position: -53px -69px;
-  width: 42px;
-  height: 28px;
 }
 #Hong_Kong {
   background-position: -4px -69px;
-  width: 42px;
-  height: 28px;
 }
 #India {
   background-position: -153px -68px;
-  width: 42px;
-  height: 28px;
 }
 #Indonesia {
   background-position: -203px -37px;
-  width: 42px;
-  height: 28px;
 }
 #Japan {
   background-position: -153px -37px;
-  width: 42px;
-  height: 28px;
 }
 #Laos {
   background-position: -102px -36px;
-  width: 42px;
-  height: 28px;
 }
 #Malaysia {
   background-position: -54px -38px;
-  width: 42px;
-  height: 28px;
 }
 #Myanmar {
   background-position: -4px -37px;
-  width: 42px;
-  height: 28px;
 }
 #Philippines {
   background-position: -204px -69px;
-  width: 42px;
-  height: 28px;
 }
 #Singapore {
   background-position: -203px -3px;
-  width: 42px;
-  height: 28px;
 }
 #South_Korea {
   background-position: -153px -4px;
-  width: 42px;
-  height: 28px;
 }
 #Thailand {
   background-position: -102px -3px;
-  width: 42px;
-  height: 28px;
 }
 #United_States {
   background-position: -53px -3px;
-  width: 42px;
-  height: 28px;
 }
 #Vietnam {
   background-position: -3px -2px;
+}
+
+/*react-transition-group*/
+.currencies-enter {
+  opacity: 0.01;
+  height: 0px;
+}
+
+.currencies-enter.currencies-enter-active {
+  opacity: 1;
+  height: 30px;
+  transition: 500ms ease-in;
+}
+
+.currencies-leave {
+  opacity: 1;
+  height: 30px;
+}
+
+.currencies-leave.currencies-leave-active {
+  opacity: 0.01;
+  height: 0px;
+  transition: 500ms ease-in;
+}
+
+.unusedCurrencies-enter {
+  opacity: 0.01;
+  /*width: 0px;*/
+}
+
+.unusedCurrencies-enter.unusedCurrencies-enter-active {
+  opacity: 1;
   width: 42px;
-  height: 28px;
+  transition: 500ms ease-in;
+}
+
+.unusedCurrencies-leave {
+  opacity: 1;
+  /*width: 42px;*/
+}
+
+.unusedCurrencies-leave.unusedCurrencies-leave-active {
+  opacity: 0.01;
+  /*width: 0px;*/
+  transition: 500ms ease-in;
 }

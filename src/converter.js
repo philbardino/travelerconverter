@@ -3,8 +3,11 @@ import Currency from "./currency.js";
 import UnusedCurrency from "./unusedCurrency.js";
 import VariableCurrency from "./variableCurrency.js";
 import { CSSTransitionGroup } from "react-transition-group";
+import { DragDropContext } from "react-beautiful-dnd";
+import { Droppable } from "react-beautiful-dnd";
+import { Draggable } from "react-beautiful-dnd";
 
-class Converter extends React.Component {
+export default class Converter extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -190,120 +193,108 @@ class Converter extends React.Component {
           id: "currencyUSD",
           label: "US Dollar - USD",
           flag: "United_States",
-          amount: 0,
-          used: true
+          amount: 0
         },
         {
           code: "KHR",
           id: "currencyKHR",
           label: "Cambodian Riel - KHR",
           flag: "Cambodia",
-          amount: 0,
-          used: true
-        },
-        {
-          code: "CNY",
-          id: "currencyCNY",
-          label: "Chinese Yuan Renminbi - CNY",
-          flag: "China",
-          amount: 0,
-          used: false
-        },
-        {
-          code: "HKD",
-          id: "currencyHKD",
-          label: "Hong Kong Dollar - HKD",
-          flag: "Hong_Kong",
-          amount: 0,
-          used: false
-        },
-        {
-          code: "INR",
-          id: "currencyINR",
-          label: "Indian Rupee - INR",
-          flag: "India",
-          amount: 0,
-          used: false
+          amount: 0
         },
         {
           code: "IDR",
           id: "currencyIDR",
           label: "Indonesian Rupiah - IDR",
           flag: "Indonesia",
-          amount: 0,
-          used: true
-        },
-        {
-          code: "JPY",
-          id: "currencyJPY",
-          label: "Japanese Yen - JPY",
-          flag: "Japan",
-          amount: 0,
-          used: false
+          amount: 0
         },
         {
           code: "LAK",
           id: "currencyLAK",
           label: "Lao Kip - LAK",
           flag: "Laos",
-          amount: 0,
-          used: true
+          amount: 0
         },
-        {
-          code: "MYR",
-          id: "currencyMYR",
-          label: "Malaysian Ringgit - MYR",
-          flag: "Malaysia",
-          amount: 0,
-          used: false
-        },
-        {
-          code: "MMK",
-          id: "currencyMMK",
-          label: "Myanmar Kyat - MMK",
-          flag: "Myanmar",
-          amount: 0,
-          used: false
-        },
-        {
-          code: "PHP",
-          id: "currencyPHP",
-          label: "Philippine Peso - PHP",
-          flag: "Philippines",
-          amount: 0,
-          used: false
-        },
-        {
-          code: "SGD",
-          id: "currencySGD",
-          label: "Singapore Dollar - SGD",
-          flag: "Singapore",
-          amount: 0,
-          used: false
-        },
-        {
-          code: "KRW",
-          id: "currencyKRW",
-          label: "South Korean Won - KRW",
-          flag: "South_Korea",
-          amount: 0,
-          used: false
-        },
+
         {
           code: "THB",
           id: "currencyTHB",
           label: "Thai Baht - THB",
           flag: "Thailand",
-          amount: 0,
-          used: true
+          amount: 0
         },
         {
           code: "VND",
           id: "currencyVND",
           label: "Vietnamese Dong - VND",
           flag: "Vietnam",
-          amount: 0,
-          used: true
+          amount: 0
+        }
+      ],
+      unusedCurrencies: [
+        {
+          code: "CNY",
+          id: "currencyCNY",
+          label: "Chinese Yuan Renminbi - CNY",
+          flag: "China",
+          amount: 0
+        },
+        {
+          code: "HKD",
+          id: "currencyHKD",
+          label: "Hong Kong Dollar - HKD",
+          flag: "Hong_Kong",
+          amount: 0
+        },
+        {
+          code: "INR",
+          id: "currencyINR",
+          label: "Indian Rupee - INR",
+          flag: "India",
+          amount: 0
+        },
+        {
+          code: "JPY",
+          id: "currencyJPY",
+          label: "Japanese Yen - JPY",
+          flag: "Japan",
+          amount: 0
+        },
+        {
+          code: "MYR",
+          id: "currencyMYR",
+          label: "Malaysian Ringgit - MYR",
+          flag: "Malaysia",
+          amount: 0
+        },
+        {
+          code: "MMK",
+          id: "currencyMMK",
+          label: "Myanmar Kyat - MMK",
+          flag: "Myanmar",
+          amount: 0
+        },
+        {
+          code: "PHP",
+          id: "currencyPHP",
+          label: "Philippine Peso - PHP",
+          flag: "Philippines",
+          amount: 0
+        },
+        {
+          code: "SGD",
+          id: "currencySGD",
+          label: "Singapore Dollar - SGD",
+          flag: "Singapore",
+          amount: 0
+        },
+        {
+          code: "KRW",
+          id: "currencyKRW",
+          label: "South Korean Won - KRW",
+          flag: "South_Korea",
+          amount: 0
         }
       ]
     };
@@ -311,6 +302,7 @@ class Converter extends React.Component {
     this.handleAmountChange = this.handleAmountChange.bind(this);
     this.handleUnusedClick = this.handleUnusedClick.bind(this);
     this.handleUsedClick = this.handleUsedClick.bind(this);
+    this.onDragEnd = this.onDragEnd.bind(this);
   }
 
   handleDropdownChange(event) {
@@ -328,35 +320,71 @@ class Converter extends React.Component {
 
   handleUnusedClick(event) {
     let updatedCurrencies = this.state.currencies;
-    for (let i = 0; i < updatedCurrencies.length; i++) {
-      if (updatedCurrencies[i].flag === event.target.id) {
-        updatedCurrencies[i].used = true;
+    let updatedUnusedCurrencies = this.state.unusedCurrencies;
+    for (let i = 0; i < updatedUnusedCurrencies.length; i++) {
+      if (updatedUnusedCurrencies[i].flag === event.target.id) {
+        updatedCurrencies.splice(
+          updatedCurrencies.length,
+          1,
+          updatedUnusedCurrencies[i]
+        );
+        updatedUnusedCurrencies.splice(i, 1);
       }
     }
+    this.setState({ unusedCurrencies: updatedUnusedCurrencies });
     this.setState({ currencies: updatedCurrencies });
   }
   handleUsedClick(event) {
     let updatedCurrencies = this.state.currencies;
+    let updatedUnusedCurrencies = this.state.unusedCurrencies;
     for (let i = 0; i < updatedCurrencies.length; i++) {
-      console.log(event.target.id);
       if (updatedCurrencies[i].flag === event.target.id) {
-        updatedCurrencies[i].used = false;
+        updatedUnusedCurrencies.splice(
+          updatedUnusedCurrencies.length,
+          1,
+          updatedCurrencies[i]
+        );
+        updatedCurrencies.splice(i, 1);
       }
     }
+    this.setState({ unusedCurrencies: updatedUnusedCurrencies });
     this.setState({ currencies: updatedCurrencies });
   }
 
+  onDragEnd = result => {
+    if (!result.destination) {
+      return;
+    }
+    const list = reorder(
+      this.state.currencies,
+      result.source.index,
+      result.destination.index
+    );
+
+    this.setState({
+      currencies: list
+    });
+  };
+
   convert(fromCurrency, enteredValue) {
     let updatedCurrencies = this.state.currencies;
+    let updatedUnusedCurrencies = this.state.unusedCurrencies;
     let updatedVariableCurrency = this.state.variableCurrency;
 
     var usdAmount = enteredValue / this.state.rates[0][fromCurrency];
     for (let i = 0; i < updatedCurrencies.length; i++) {
-      var amount =
+      let amount =
         Math.round(
           usdAmount * this.state.rates[0][updatedCurrencies[i].code] * 100
         ) / 100;
       updatedCurrencies[i].amount = amount;
+    }
+    for (let i = 0; i < updatedUnusedCurrencies.length; i++) {
+      let amount =
+        Math.round(
+          usdAmount * this.state.rates[0][updatedUnusedCurrencies[i].code] * 100
+        ) / 100;
+      updatedUnusedCurrencies[i].amount = amount;
     }
     var variableAmount =
       Math.round(
@@ -372,26 +400,31 @@ class Converter extends React.Component {
   render() {
     let currencyList = [];
     let unusedCurrencyList = [];
-    for (let i = 0; i < this.state.currencies.length; i++) {
-      if (this.state.currencies[i].used === true) {
-        currencyList.push(
-          <Currency
-            key={this.state.currencies[i].code}
-            country={this.state.currencies[i]}
-            onChange={this.handleAmountChange}
-            onClick={this.handleUsedClick}
-          />
-        );
-      } else {
-        unusedCurrencyList.push(
-          <UnusedCurrency
-            key={this.state.currencies[i].code}
-            country={this.state.currencies[i]}
-            onClick={this.handleUnusedClick}
-          />
-        );
-      }
-    }
+    currencyList = this.state.currencies.map((currency, index) => (
+      <Draggable key={currency.code} draggableId={currency.code} index={index}>
+        {(provided, snapshot) => (
+          <div
+            ref={provided.innerRef}
+            {...provided.draggableProps}
+            {...provided.dragHandleProps}
+          >
+            <Currency
+              key={currency.code}
+              country={currency}
+              onChange={this.handleAmountChange}
+              onClick={this.handleUsedClick}
+            />
+          </div>
+        )}
+      </Draggable>
+    ));
+    unusedCurrencyList = this.state.unusedCurrencies.map(unusedCurrency => (
+      <UnusedCurrency
+        key={unusedCurrency.code}
+        country={unusedCurrency}
+        onClick={this.handleUnusedClick}
+      />
+    ));
 
     return (
       <div id="currencyBox">
@@ -403,9 +436,22 @@ class Converter extends React.Component {
                 onDropdownChange={this.handleDropdownChange}
                 onChange={this.handleAmountChange}
               />
-              <CSSTransitionGroup transitionName="currencies">
-                {currencyList}
-              </CSSTransitionGroup>
+              <DragDropContext onDragEnd={this.onDragEnd}>
+                <Droppable droppableId="droppable">
+                  {provided => (
+                    <div ref={provided.innerRef}>
+                      <CSSTransitionGroup
+                        transitionName="currencies"
+                        transitionEnterTimeout={500}
+                        transitionLeaveTimeout={500}
+                      >
+                        {currencyList}
+                      </CSSTransitionGroup>
+                      {provided.placeholder}
+                    </div>
+                  )}
+                </Droppable>
+              </DragDropContext>
             </ul>
           </form>
         </div>
@@ -414,7 +460,11 @@ class Converter extends React.Component {
             <span className="unused"> Click</span> Flags to Add and Remove
           </div>
           <ul id="unusedFlags">
-            <CSSTransitionGroup transitionName="unusedCurrencies">
+            <CSSTransitionGroup
+              transitionName="unusedCurrencies"
+              transitionEnterTimeout={500}
+              transitionLeaveTimeout={500}
+            >
               {unusedCurrencyList}
             </CSSTransitionGroup>
           </ul>
@@ -424,4 +474,9 @@ class Converter extends React.Component {
   }
 }
 
-export default Converter;
+const reorder = (currencies, startIndex, endIndex) => {
+  const reorderedCurrencies = Array.from(currencies);
+  const [removed] = reorderedCurrencies.splice(startIndex, 1);
+  reorderedCurrencies.splice(endIndex, 0, removed);
+  return reorderedCurrencies;
+};
