@@ -10,6 +10,8 @@ import { Draggable } from "react-beautiful-dnd";
 export default class Converter extends React.Component {
   constructor(props) {
     super(props);
+
+    let initialCurrencies = getCurrencies();
     this.state = {
       rates: [
         {
@@ -186,117 +188,9 @@ export default class Converter extends React.Component {
           ZWL: 322.355011
         }
       ],
-      variableCurrency: [{ code: "EUR", amount: 0 }],
-      currencies: [
-        {
-          code: "USD",
-          id: "currencyUSD",
-          label: "US Dollar - USD",
-          flag: "United_States",
-          amount: 0
-        },
-        {
-          code: "KHR",
-          id: "currencyKHR",
-          label: "Cambodian Riel - KHR",
-          flag: "Cambodia",
-          amount: 0
-        },
-        {
-          code: "IDR",
-          id: "currencyIDR",
-          label: "Indonesian Rupiah - IDR",
-          flag: "Indonesia",
-          amount: 0
-        },
-        {
-          code: "LAK",
-          id: "currencyLAK",
-          label: "Lao Kip - LAK",
-          flag: "Laos",
-          amount: 0
-        },
-
-        {
-          code: "THB",
-          id: "currencyTHB",
-          label: "Thai Baht - THB",
-          flag: "Thailand",
-          amount: 0
-        },
-        {
-          code: "VND",
-          id: "currencyVND",
-          label: "Vietnamese Dong - VND",
-          flag: "Vietnam",
-          amount: 0
-        }
-      ],
-      unusedCurrencies: [
-        {
-          code: "CNY",
-          id: "currencyCNY",
-          label: "Chinese Yuan Renminbi - CNY",
-          flag: "China",
-          amount: 0
-        },
-        {
-          code: "HKD",
-          id: "currencyHKD",
-          label: "Hong Kong Dollar - HKD",
-          flag: "Hong_Kong",
-          amount: 0
-        },
-        {
-          code: "INR",
-          id: "currencyINR",
-          label: "Indian Rupee - INR",
-          flag: "India",
-          amount: 0
-        },
-        {
-          code: "JPY",
-          id: "currencyJPY",
-          label: "Japanese Yen - JPY",
-          flag: "Japan",
-          amount: 0
-        },
-        {
-          code: "MYR",
-          id: "currencyMYR",
-          label: "Malaysian Ringgit - MYR",
-          flag: "Malaysia",
-          amount: 0
-        },
-        {
-          code: "MMK",
-          id: "currencyMMK",
-          label: "Myanmar Kyat - MMK",
-          flag: "Myanmar",
-          amount: 0
-        },
-        {
-          code: "PHP",
-          id: "currencyPHP",
-          label: "Philippine Peso - PHP",
-          flag: "Philippines",
-          amount: 0
-        },
-        {
-          code: "SGD",
-          id: "currencySGD",
-          label: "Singapore Dollar - SGD",
-          flag: "Singapore",
-          amount: 0
-        },
-        {
-          code: "KRW",
-          id: "currencyKRW",
-          label: "South Korean Won - KRW",
-          flag: "South_Korea",
-          amount: 0
-        }
-      ]
+      variableCurrency: initializeVariableCurrency(),
+      currencies: initializeCurrencies(initialCurrencies),
+      unusedCurrencies: initializeUnusedCurrencies(initialCurrencies)
     };
     this.handleDropdownChange = this.handleDropdownChange.bind(this);
     this.handleAmountChange = this.handleAmountChange.bind(this);
@@ -457,7 +351,8 @@ export default class Converter extends React.Component {
         </div>
         <div id="unused">
           <div id="unusedHeader">
-            <span className="unused"> Click</span> Flags to Add and Remove
+            <span className="unused">Drag</span> flags to reorder.
+            <span className="unused"> Click</span> flags to add and remove
           </div>
           <ul id="unusedFlags">
             <CSSTransitionGroup
@@ -479,4 +374,164 @@ const reorder = (currencies, startIndex, endIndex) => {
   const [removed] = reorderedCurrencies.splice(startIndex, 1);
   reorderedCurrencies.splice(endIndex, 0, removed);
   return reorderedCurrencies;
+};
+
+const currenciesMaster = [
+  {
+    code: "USD",
+    id: "currencyUSD",
+    label: "US Dollar - USD",
+    flag: "United_States",
+    amount: 0
+  },
+  {
+    code: "KHR",
+    id: "currencyKHR",
+    label: "Cambodian Riel - KHR",
+    flag: "Cambodia",
+    amount: 0
+  },
+  {
+    code: "IDR",
+    id: "currencyIDR",
+    label: "Indonesian Rupiah - IDR",
+    flag: "Indonesia",
+    amount: 0
+  },
+  {
+    code: "LAK",
+    id: "currencyLAK",
+    label: "Lao Kip - LAK",
+    flag: "Laos",
+    amount: 0
+  },
+
+  {
+    code: "THB",
+    id: "currencyTHB",
+    label: "Thai Baht - THB",
+    flag: "Thailand",
+    amount: 0
+  },
+  {
+    code: "VND",
+    id: "currencyVND",
+    label: "Vietnamese Dong - VND",
+    flag: "Vietnam",
+    amount: 0
+  },
+  {
+    code: "CNY",
+    id: "currencyCNY",
+    label: "Chinese Yuan Renminbi - CNY",
+    flag: "China",
+    amount: 0
+  },
+  {
+    code: "HKD",
+    id: "currencyHKD",
+    label: "Hong Kong Dollar - HKD",
+    flag: "Hong_Kong",
+    amount: 0
+  },
+  {
+    code: "INR",
+    id: "currencyINR",
+    label: "Indian Rupee - INR",
+    flag: "India",
+    amount: 0
+  },
+  {
+    code: "JPY",
+    id: "currencyJPY",
+    label: "Japanese Yen - JPY",
+    flag: "Japan",
+    amount: 0
+  },
+  {
+    code: "MYR",
+    id: "currencyMYR",
+    label: "Malaysian Ringgit - MYR",
+    flag: "Malaysia",
+    amount: 0
+  },
+  {
+    code: "MMK",
+    id: "currencyMMK",
+    label: "Myanmar Kyat - MMK",
+    flag: "Myanmar",
+    amount: 0
+  },
+  {
+    code: "PHP",
+    id: "currencyPHP",
+    label: "Philippine Peso - PHP",
+    flag: "Philippines",
+    amount: 0
+  },
+  {
+    code: "SGD",
+    id: "currencySGD",
+    label: "Singapore Dollar - SGD",
+    flag: "Singapore",
+    amount: 0
+  },
+  {
+    code: "KRW",
+    id: "currencyKRW",
+    label: "South Korean Won - KRW",
+    flag: "South_Korea",
+    amount: 0
+  }
+];
+
+const getCurrencies = () => {
+  let url = window.location.href;
+  let countryParameters = new URLSearchParams(
+    url.substring(url.indexOf("?") + 1)
+  );
+  let urlCountries = ["USD", "KHR", "IDR", "LAK", "THB", "VND"];
+  if (countryParameters.getAll("country").length > 0) {
+    urlCountries = countryParameters.getAll("country");
+  }
+  return urlCountries;
+};
+
+const initializeCurrencies = urlCountries => {
+  let usedCurrencies = [];
+  if (urlCountries.length > 0) {
+    urlCountries.forEach(element => {
+      currenciesMaster.forEach(country => {
+        if (element === country.code) {
+          usedCurrencies.push(country);
+        }
+      });
+    });
+  }
+  return usedCurrencies;
+};
+
+const initializeUnusedCurrencies = urlCountries => {
+  let unusedCurrencies = currenciesMaster;
+  for (let i = 0; i < urlCountries.length; i++) {
+    for (let j = 0; j < currenciesMaster.length; j++) {
+      if (urlCountries[i] === unusedCurrencies[j].code) {
+        unusedCurrencies.splice(j, 1);
+        break;
+      }
+    }
+  }
+  return unusedCurrencies;
+};
+
+const initializeVariableCurrency = () => {
+  let url = window.location.href;
+  let countryParameters = new URLSearchParams(
+    url.substring(url.indexOf("?") + 1)
+  );
+  let variableCurrency = [{ code: "EUR", amount: 0 }];
+  if (countryParameters.get("variable")) {
+    variableCurrency[0].code = countryParameters.get("variable");
+  }
+  return variableCurrency;
 };
