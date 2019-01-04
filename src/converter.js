@@ -31,12 +31,14 @@ export default class Converter extends React.Component {
 
   handleBookmarkClick(event) {
     let bookmarkUrl =
-      "localhost:3000?variable=" + this.state.variableCurrency[0].code + "&";
+      window.location.href +
+      "?variable=" +
+      this.state.variableCurrency[0].code +
+      "&";
     for (var i = 0; i < this.state.currencies.length; i++) {
       bookmarkUrl += "country=" + this.state.currencies[i].code + "&";
     }
     bookmarkUrl = bookmarkUrl.substring(0, bookmarkUrl.length - 1);
-    /*this.setState({ url: bookmarkUrl });*/
 
     copyStringToClipboard(bookmarkUrl);
     this.setState({ copySuccess: "URL copied to clipboard" });
