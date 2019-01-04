@@ -7,6 +7,7 @@ class UnusedCurrency extends React.Component {
         className="unusedFlag"
         name={this.props.country.code}
         id={this.props.country.flag}
+        title={this.props.country.flag}
         onClick={this.props.onClick}
       />
     );

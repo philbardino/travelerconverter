@@ -18,6 +18,7 @@ class Currency extends React.Component {
           </div>
           <div
             className="flag handle"
+            title={this.props.country.flag}
             id={this.props.country.flag}
             onClick={this.props.onClick}
           />
