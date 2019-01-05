@@ -26,7 +26,6 @@ export default class Bookmark extends React.Component {
         >
           {bookmarkCopy}
         </CSSTransitionGroup>
-        {/*<input id="bookmarkInput" type="text" value={this.props.url} />*/}
         <div id="poweredBy">
           Powered by
           <a href="http://openexchangerates.org/">openexchangerates.org</a>

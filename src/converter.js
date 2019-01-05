@@ -31,7 +31,7 @@ export default class Converter extends React.Component {
 
   handleBookmarkClick(event) {
     let bookmarkUrl =
-      window.location.href +
+      window.location.host +
       "?variable=" +
       this.state.variableCurrency[0].code +
       "&";
@@ -163,6 +163,12 @@ export default class Converter extends React.Component {
     return (
       <div>
         <div id="currencyBox">
+          <h1>Traveler Converter</h1>
+          <div id="intro">
+            A currency converter specifically designed for
+            <span className="unused"> backpackers</span> traveling through
+            <span className="unused"> Southeast Asia</span>
+          </div>
           <div id="data">
             <form>
               <ul id="currencyList" className="sortable">

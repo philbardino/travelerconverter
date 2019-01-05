@@ -1,13 +1,29 @@
-body {
-  font-family: Arial, Helvetica, sans-serif;
+@font-face {
+  font-family: "Proxima";
+  src: url("./ProximaNovaLight.otf");
 }
-
+body {
+  font-family: Proxima, Arial, Helvetica, sans-serif;
+}
 #currencyBox {
   overflow: hidden;
   width: auto;
 }
+#intro {
+  text-align: center;
+  padding: 10px 10px 0px;
+}
+h1 {
+  display: flex;
+  justify-content: center;
+}
+.bold {
+  font-weight: bold;
+  padding-right: 4px;
+  padding-left: 4px;
+}
 #data {
-  padding: 15px 5px 0;
+  padding: 10px 5px 0;
   display: flex;
   justify-content: center;
 }
@@ -20,6 +36,7 @@ li.currency {
   clear: both;
   overflow: auto;
   width: 100%;
+  /*cursor: default;*/
 }
 #data img {
   margin: 0px;
@@ -30,7 +47,7 @@ div.flag {
   float: right;
   margin-right: 20px;
   margin-top: 2px;
-  cursor: move;
+  /*cursor: move;*/
   width: 42px;
   height: 28px;
 }
@@ -54,6 +71,7 @@ div.label {
 label.currencylabel {
   display: inline;
   font-weight: bold;
+  cursor: grab;
 }
 div.currencyFrom {
   height: 35px;
