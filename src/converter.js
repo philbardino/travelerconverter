@@ -7,7 +7,6 @@ import { CSSTransitionGroup } from "react-transition-group";
 import { DragDropContext } from "react-beautiful-dnd";
 import { Droppable } from "react-beautiful-dnd";
 import { Draggable } from "react-beautiful-dnd";
-import * as openExchange from "./exchangeRates.json";
 
 export default class Converter extends React.Component {
   constructor(props) {
@@ -15,7 +14,7 @@ export default class Converter extends React.Component {
 
     let initialCurrencies = getCurrencies();
     this.state = {
-      rates: openExchange.rates,
+      rates: [],
       variableCurrency: initializeVariableCurrency(),
       currencies: initializeCurrencies(initialCurrencies),
       unusedCurrencies: initializeUnusedCurrencies(initialCurrencies),
@@ -27,6 +26,18 @@ export default class Converter extends React.Component {
     this.handleUnusedClick = this.handleUnusedClick.bind(this);
     this.handleUsedClick = this.handleUsedClick.bind(this);
     this.onDragEnd = this.onDragEnd.bind(this);
+  }
+
+  componentDidMount() {
+    fetch(
+      "https://s3.us-east-2.amazonaws.com/www.travelerconverter.com/exchangeRates.json"
+    )
+      .then(res => res.json())
+      .then(result => {
+        this.setState({
+          rates: result.rates
+        });
+      });
   }
 
   handleBookmarkClick(event) {
@@ -392,7 +403,8 @@ const copyStringToClipboard = str => {
   var el = document.createElement("textarea");
   el.value = str;
   // Set non-editable to avoid focus and move outside of view
-  el.setAttribute("readonly", "");
+  el.setAttribute("readonly", false);
+  el.setAttribute("contenteditable", true);
   el.style = { position: "absolute", left: "-9999px" };
   document.body.appendChild(el);
   // Select text inside element

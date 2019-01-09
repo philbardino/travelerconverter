@@ -250,9 +250,31 @@ div#poweredBy a:link {
     margin-top: 5px;
   }
   div.label {
-    /*float: none;
-    clear: both;*/
     padding-left: 10px;
+  }
+}
+
+@media (max-width: 425px) {
+  div.input_text {
+    width: 100px;
+  }
+  input.number {
+    font-size: 14px;
+    width: 90px;
+    margin-top: 5px;
+  }
+  #currencyFrom select {
+    width: 150px;
+    margin-top: 5px;
+  }
+  div.inputandflag {
+    width: 185px;
+  }
+  div.label {
+    padding-left: 0px;
+  }
+  li.currency {
+    height: 32px;
   }
 }
 
