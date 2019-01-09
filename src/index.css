@@ -36,7 +36,6 @@ li.currency {
   clear: both;
   overflow: auto;
   width: 100%;
-  /*cursor: default;*/
 }
 #data img {
   margin: 0px;
@@ -47,7 +46,6 @@ div.flag {
   float: right;
   margin-right: 20px;
   margin-top: 2px;
-  /*cursor: move;*/
   width: 42px;
   height: 28px;
 }
@@ -79,13 +77,9 @@ div.currencyFrom {
   background: url(http://www.onewayticketphil.com/wp-content/uploads/2012/05/down_arrow_select.jpg)
     no-repeat right #ddd;
 }
-.currencyFrom select {
-  background: transparent;
-  padding: 3px;
-  border: 1px solid #ccc;
-  font-weight: bold;
-  height: 34px;
-  -webkit-appearance: none;
+select.currencyFrom {
+  margin-top: 3px;
+  padding: 2px;
 }
 #error {
   text-align: center;
@@ -181,6 +175,7 @@ div.bookmark input[type="button"]:hover {
     0 0 20px rgba(255, 255, 255, 0.2);
   outline-color: rgba(255, 255, 255, 0);
   outline-offset: 7px;
+  -webkit-appearance: none;
 }
 div.copy {
   margin: 1em;
@@ -223,7 +218,7 @@ div#poweredBy a:link {
     width: 200px;
     font-size: 14px;
     padding: 2px;
-    margin-top: 5px;
+    margin-top: 3px;
   }
   .unusedFlag {
     margin-top: 5px;
@@ -247,7 +242,6 @@ div#poweredBy a:link {
     width: 180px;
     font-size: 12px;
     padding: 2px;
-    margin-top: 5px;
   }
   div.label {
     padding-left: 10px;
@@ -275,6 +269,17 @@ div#poweredBy a:link {
   }
   li.currency {
     height: 32px;
+  }
+}
+@media (max-width: 425px) {
+  div.flag {
+    margin-right: 7px;
+  }
+  div.inputandflag {
+    width: 165px;
+  }
+  div#data {
+    padding: 10px 0px 0px;
   }
 }
 

@@ -18,7 +18,8 @@ export default class Converter extends React.Component {
       variableCurrency: initializeVariableCurrency(),
       currencies: initializeCurrencies(initialCurrencies),
       unusedCurrencies: initializeUnusedCurrencies(initialCurrencies),
-      copySuccess: ""
+      copySuccess: "",
+      bookmarkUrl: ""
     };
     this.handleBookmarkClick = this.handleBookmarkClick.bind(this);
     this.handleDropdownChange = this.handleDropdownChange.bind(this);
@@ -41,17 +42,6 @@ export default class Converter extends React.Component {
   }
 
   handleBookmarkClick(event) {
-    let bookmarkUrl =
-      window.location.host +
-      "?variable=" +
-      this.state.variableCurrency[0].code +
-      "&";
-    for (var i = 0; i < this.state.currencies.length; i++) {
-      bookmarkUrl += "country=" + this.state.currencies[i].code + "&";
-    }
-    bookmarkUrl = bookmarkUrl.substring(0, bookmarkUrl.length - 1);
-
-    copyStringToClipboard(bookmarkUrl);
     this.setState({ copySuccess: "URL copied to clipboard" });
     setTimeout(() => this.setState({ copySuccess: "" }), 3000);
   }
@@ -226,6 +216,8 @@ export default class Converter extends React.Component {
         <Bookmark
           onClick={this.handleBookmarkClick}
           copySuccess={this.state.copySuccess}
+          variableCurrency={this.state.variableCurrency}
+          currencies={this.state.currencies}
         />
       </div>
     );
@@ -399,9 +391,10 @@ const initializeVariableCurrency = () => {
   return variableCurrency;
 };
 
-const copyStringToClipboard = str => {
+/*const copyStringToClipboard = str => {
   var el = document.createElement("textarea");
-  el.value = str;
+  el.innerText = str;
+  //el.value = str;
   // Set non-editable to avoid focus and move outside of view
   el.setAttribute("readonly", false);
   el.setAttribute("contenteditable", true);
@@ -413,4 +406,4 @@ const copyStringToClipboard = str => {
   document.execCommand("copy");
   // Remove temporary element
   document.body.removeChild(el);
-};
+};*/
