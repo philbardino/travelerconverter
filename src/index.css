@@ -150,6 +150,7 @@ div.bookmark {
 div.bookmark input[type="text"] {
   font-size: 14px;
   width: 70%;
+  -webkit-appearance: none;
 }
 div.bookmark input[type="button"] {
   border: 0 solid;
@@ -168,6 +169,7 @@ div.bookmark input[type="button"] {
   text-transform: uppercase;
   width: 100%;
   transition: all 1250ms cubic-bezier(0.19, 1, 0.22, 1);
+  -webkit-appearance: none;
 }
 div.bookmark input[type="button"]:hover {
   border: 1px solid;
@@ -270,6 +272,13 @@ div#poweredBy a:link {
   li.currency {
     height: 32px;
   }
+  textarea,
+  input.text,
+  input[type="text"],
+  input[type="button"],
+  input[type="submit"] {
+    -webkit-appearance: none;
+  }
 }
 @media (max-width: 425px) {
   div.flag {
@@ -280,6 +289,26 @@ div#poweredBy a:link {
   }
   div#data {
     padding: 10px 0px 0px;
+  }
+  input.number {
+    width: 75px;
+  }
+  div.input_text {
+    width: 90px;
+  }
+}
+@media (max-width: 325px) {
+  #currencyFrom select {
+    width: 130px;
+  }
+  label.currencylabel {
+    font-size: 12px;
+  }
+  input.number {
+    font-size: 12px;
+  }
+  input.number {
+    padding-right: 5px;
   }
 }
 

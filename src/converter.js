@@ -278,7 +278,7 @@ const currenciesMaster = [
   {
     code: "CNY",
     id: "currencyCNY",
-    label: "Chinese Yuan Renminbi - CNY",
+    label: "Chinese Yuan - CNY",
     flag: "China",
     amount: 0
   },
