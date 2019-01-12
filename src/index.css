@@ -71,11 +71,8 @@ label.currencylabel {
   font-weight: bold;
   cursor: grab;
 }
-div.currencyFrom {
-  height: 35px;
-  overflow: hidden;
-  background: url(http://www.onewayticketphil.com/wp-content/uploads/2012/05/down_arrow_select.jpg)
-    no-repeat right #ddd;
+div#currencyFrom {
+  float: left;
 }
 select.currencyFrom {
   margin-top: 3px;
@@ -129,13 +126,6 @@ div.inputandflag {
 }
 div.label {
   margin-top: 4px;
-}
-div.currencyFrom {
-  width: 290px;
-}
-.currencyFrom select {
-  width: 298px;
-  font-size: 18px;
 }
 
 .sortable-placeholder {
@@ -260,7 +250,7 @@ div#poweredBy a:link {
     margin-top: 5px;
   }
   #currencyFrom select {
-    width: 150px;
+    width: 140px;
     margin-top: 5px;
   }
   div.inputandflag {
