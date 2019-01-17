@@ -1,4 +1,4 @@
-# [[Traveler Converter]](http://www.travelerconverter.com/)
+# [Traveler Converter](http://www.travelerconverter.com/)
 
 _A currency converter built specifically for Southeast Asian Backpackers_
 
@@ -16,3 +16,7 @@ The Traveler Converter was bootstrapped with [Create React App](https://github.c
 # AWS
 
 The site is hosted as a static website in an AWS S3 Bucket, while also using a Lambda function to keep the exchange rates json file up to date.
+
+# Exchange Rate API
+
+The converter makes daily calls to [openexchangerates.org](https://openexchangerates.org/) for up to date exchange rates.
